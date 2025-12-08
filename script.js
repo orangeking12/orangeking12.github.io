@@ -149,3 +149,23 @@ document.getElementById('idCardElement').addEventListener('click', function() {
     idCardContainer.classList.toggle('revealed');
     bodyElement.classList.toggle('overlay-active');
 });
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    updateTime();
+    setInterval(updateTime, 1000);
+    loadUserInfo();
+    
+    // [추가] 사용자의 첫 상호작용 시 비디오 재생 시도
+    document.body.addEventListener('touchstart', tryPlayVideo, { once: true });
+    document.body.addEventListener('click', tryPlayVideo, { once: true });
+});
+
+function tryPlayVideo() {
+    const video = document.getElementById('bg-video');
+    if (video) {
+        // Promise를 반환하므로 성공/실패 처리
+        video.play().catch(error => {
+            console.log("비디오 재생 실패 (브라우저 정책):", error);
+        });
+    }
+}

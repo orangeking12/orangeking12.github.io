@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>내 모임 디지털 신분증</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <!-- 상단 버튼 컨테이너 -->
+    <div class="top-buttons-container">
+        <!-- 설정 버튼 (햄버거 메뉴 아이콘) -->
+        <button class="settings-btn" onclick="toggleSettings()">☰</button>
+        
+        <!-- 새로운 + 버튼 -->
+        <button class="plus-btn">+</button>
+    </div>
+
+    <!-- 모드 전환 토글 스위치 -->
+    <div class="mode-toggle-container">
+        <label class="switch">
+            <input type="checkbox" id="modeSwitch" onchange="toggleMode()">
+            <span class="slider round">
+                <span class="mode-text left-text">신분증</span>
+                <span class="mode-text right-text">자격증</span>
+            </span>
+        </label>
+    </div>
+
+    <!-- 현재 시간 표시 영역 -->
+    <div class="time-stamp" id="current-time">
+        --:--:--
+    </div>
+
+    <!-- 설정 사이드바 -->
+    <div class="settings-sidebar" id="settings-sidebar">
+        <h3>정보 수정</h3>
+        <label for="userNameInput">이름:</label>
+        <input type="text" id="userNameInput" placeholder="이름 입력">
+        <label for="userNicknameInput">별명:</label>
+        <input type="text" id="userNicknameInput" placeholder="별명 입력">
+        
+        <!-- 가입일 입력란 대신 집 주소 입력란 추가 -->
+     <!-- ... (생략) ... -->
+        <label for="userAddressInput">집 주소:</label>
+        <!-- input 대신 textarea 사용 -->
+        <textarea id="userAddressInput" placeholder="집 주소 입력 (엔터로 줄바꿈 가능)"></textarea>
+        
+        <label for="userPhotoUrlInput">사진 URL:</label>
+<!-- ... (생략) ... -->
+
+        <input type="text" id="userPhotoUrlInput" placeholder="이미지 URL 입력">
+
+        <label for="userPhotoFileInput" class="file-label">파일 선택 (또는 위 URL 사용)</label>
+        <input type="file" id="userPhotoFileInput" accept="image/*" style="display: none;">
+        
+        <button onclick="saveUserInfo()">저장하기</button>
+        <button onclick="toggleSettings()">닫기</button>
+    </div>
+
+    <!-- 신분증 영역 (가로 고정형) -->
+    <div class="id-card-container">
+        <div class="id-card" id="idCardElement"> 
+            <!-- 비디오 엘리먼트 -->
+            <video autoplay muted loop id="bg-video">
+                <source src="background_video.mp4" type="video/mp4">
+            </video>
+            <div class="content">
+                <div class="profile">
+                    <img src="placeholder_photo.jpg" alt="프로필 사진" class="photo" id="user-photo">
+                    <div class="details">
+                        <!-- 텍스트 라벨 제거, 데이터 span만 남김 -->
+                        <p><span id="user-name"></span></p>
+                        <p><span id="user-nickname"></span></p>
+                        <p><span id="user-address"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

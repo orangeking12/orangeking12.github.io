@@ -1,0 +1,237 @@
+body {
+    position: relative; /* absolute 요소들의 기준점 */
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+    font-family: sans-serif;
+    overflow: hidden;
+}
+
+/* 상단 버튼들을 묶는 컨테이너 */
+.top-buttons-container {
+    position: absolute;
+    top: 32px; /* 0.3cm (12px) 내린 위치 */
+    left: 0;
+    right: 0;
+    display: flex; 
+    justify-content: space-between; 
+    padding: 0 20px; 
+    z-index: 10;
+}
+
+/* 설정 버튼 스타일 (햄버거 메뉴) */
+.settings-btn {
+    padding: 5px 10px;
+    background-color: transparent;
+    color: #333;
+    border: none; 
+    box-shadow: none;
+    cursor: pointer;
+    font-size: 24px;
+    line-height: 1;
+}
+
+/* 새로운 + 버튼 스타일 */
+.plus-btn {
+    padding: 5px 10px;
+    background-color: transparent;
+    color: #333;
+    border: none;
+    box-shadow: none;
+    cursor: pointer;
+    font-size: 24px;
+    line-height: 1;
+}
+
+
+/* 모드 토글 컨테이너 위치 설정 (원래 코드 복구) */
+.mode-toggle-container {
+    position: absolute;
+    top: 20px; /* 원래 위치 20px */
+    left: 50%; 
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 10;
+}
+
+
+/* 토글 스위치 (Switch) 스타일 (원래 코드 복구) */
+.switch {
+  position: relative; display: inline-block; width: 180px; height: 51px; 
+  border: 1px solid #ccc; border-radius: 51px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); 
+  overflow: hidden; 
+}
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider {
+  position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+  background-color: transparent; transition: .4s; display: flex; align-items: center;
+  justify-content: space-between; padding: 0; font-weight: bold;
+}
+.mode-text {
+    position: absolute; font-size: 16px; display: flex; align-items: center;
+    justify-content: center; height: 100%; width: 50%;
+    transition: background-color 0.4s, color 0.4s;
+}
+.left-text { left: 0; background-color: #333; color: white; border-top-left-radius: 51px; border-bottom-left-radius: 51px; }
+.right-text { right: 0; background-color: #eee; color: #aaa; border-top-right-radius: 51px; border-bottom-right-radius: 51px; }
+input:checked + .slider .left-text { background-color: #eee; color: #aaa; }
+input:checked + .slider .right-text { background-color: #333; color: white; }
+
+
+/* 설정 사이드바 스타일 (파일 업로드 기능 관련 CSS 유지) */
+.settings-sidebar {
+    position: fixed; left: 0; top: 0; height: 100%; width: 300px;
+    background-color: white; padding: 20px; box-shadow: none; 
+    transform: translateX(-100%); transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; 
+    z-index: 20; display: flex; flex-direction: column; gap: 10px;
+}
+.settings-sidebar.open { transform: translateX(0); box-shadow: 2px 0 5px rgba(0,0,0,0.5); }
+.settings-sidebar input[type="text"],
+.settings-sidebar input[type="date"],
+.settings-sidebar textarea { /* ⭐ textarea 스타일 추가/수정 ⭐ */
+    padding: 8px; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+    width: 100%; 
+    box-sizing: border-box; 
+    margin-bottom: 5px;
+    height: 80px; /* ⭐ 높이 지정 ⭐ */
+    resize: vertical; /* ⭐ 크기 조절 허용 ⭐ */
+}
+.settings-sidebar label {
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+.settings-sidebar button { margin-top: 10px; }
+.file-label {
+    display: inline-block; padding: 8px 12px; cursor: pointer;
+    background-color: #007bff; color: white; border-radius: 4px;
+    text-align: center; margin-top: 10px; transition: background-color 0.3s;
+    font-size: 0.9em;
+}
+.file-label:hover { background-color: #0056b3; }
+
+
+/* 시간 영역 스타일 수정 (원래 위치 116px 유지) */
+.time-stamp {
+    position: absolute;
+    top: 116px; 
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    font-size: 0.9em; 
+    font-weight: bold;
+    background-color: transparent; 
+    padding: 0px; 
+    border-radius: 0px;
+    z-index: 5;
+    width: 100%; 
+    color: #333;
+}
+
+
+/* 신분증 컨테이너 스타일 (원래 90도 회전 복구) */
+.id-card-container {
+    position: absolute; 
+    top: 250px; 
+    left: 50%;
+    transform: translate(-50%, 0) rotate(90deg); 
+    width: 95vh; 
+    max-width: 450px; 
+    padding: 0;
+}
+.id-card {
+    position: relative; 
+    width: 100%; 
+    aspect-ratio: 85.6 / 54; /* 신분증 비율 유지 */
+    background-color: none; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    transition: background-color 0.3s ease;
+}
+
+/* 자격증 모드(자격증)일 때 배경색 변경 */
+.id-card.band-mode { background-color: #333; color: white; }
+
+/* 배경 비디오 스타일 (오버레이) */
+#bg-video { 
+    position: absolute; 
+    top: 49.95%; 
+    left: 50%;
+    width: auto;
+    height: auto;
+    z-index: 0;     /* 콘텐츠 뒤로 보냄 */
+    opacity: 1.2;     /* 불투명도 100% */
+    
+    transform: translate(-50%, -50%) rotate(270deg) scale(0.344); 
+    
+    /* 대비(contrast)와 밝기(brightness)를 조절하는 필터 추가 */
+    filter: contrast(100%) brightness(90%) saturate(150%); 
+}
+
+
+/* 콘텐츠 (텍스트, 사진) 스타일) */
+.content { 
+    position: relative; /* 내부 absolute 요소들의 기준점 역할을 함 */
+    z-index: 1; /* 비디오 위로 올림 */
+    padding: 15px; /* 내부 여백 */
+    color: inherit; 
+    height: 100%; 
+    display: block; 
+}
+
+/* 프로필 블록 위치 조정 */
+.profile { 
+    display: flex; 
+    align-items: center; 
+}
+
+/* 프로필 사진 위치 (우측 상단으로 이동) */
+.photo { 
+    width: 140px; 
+    height: 170px; 
+    object-fit: cover; 
+    border-radius: 5px; 
+    border: 1px solid white; 
+    
+    position: absolute;
+    right: 15px; /* 오른쪽에서 15px 간격 */
+    top: 15px;   /* 위에서 15px 간격 */
+    margin-right: 0; /* 기존 마진 제거 */
+}
+
+/* 이름/정보 텍스트 위치 (맨 왼쪽 상단) */
+.details {
+    position: absolute;
+    left: 30px; /* 왼쪽에서 15px 간격 */
+    top: 80px;  /* 위에서 15px 간격 */
+}
+
+/* 텍스트 p 태그 마진은 그대로 유지 */
+.details p { 
+    margin: 2px 0; 
+    font-size: 1.2em; 
+    line-height: 1.7; 
+    color: inherit; 
+}
+
+/* 주소 폰트 크기 및 자동 줄바꿈 설정 */
+#user-address {
+    font-size: 0.9em; 
+    display: block;   
+    word-wrap: break-word; 
+    white-space: normal; 
+    line-height: 1.2; 
+        /* ⭐ 주소 위에만 마진을 추가하는 방법 ⭐ */
+    margin-top: 8px; /* 예시: 주소 위에 8px 간격 추가 */
+}
+
+
+/* 이름 폰트 굵기 설정 */
+#user-name {
+    /* 굵기 값은 normal, bold, bolder, lighter 또는 숫자(100~900)로 지정 가능 */
+    font-weight: 500; /* 'medium' 또는 500 (별명 bold(700)보다는 얇지만 기본보다는 굵게) */
+}

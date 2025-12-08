@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>내 모임 디지털 신분증</title>
+    
+    <!-- iOS Safari 웹 앱 모드 활성화 메타 태그 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- 앱 아이콘이나 시작 화면 이미지도 추가할 수 있습니다 (선택 사항) -->
+    <!-- <link rel="apple-touch-icon" href="icon.png"> -->
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -42,14 +49,10 @@
         <input type="text" id="userNicknameInput" placeholder="별명 입력">
         
         <!-- 가입일 입력란 대신 집 주소 입력란 추가 -->
-     <!-- ... (생략) ... -->
         <label for="userAddressInput">집 주소:</label>
-        <!-- input 대신 textarea 사용 -->
         <textarea id="userAddressInput" placeholder="집 주소 입력 (엔터로 줄바꿈 가능)"></textarea>
         
         <label for="userPhotoUrlInput">사진 URL:</label>
-<!-- ... (생략) ... -->
-
         <input type="text" id="userPhotoUrlInput" placeholder="이미지 URL 입력">
 
         <label for="userPhotoFileInput" class="file-label">파일 선택 (또는 위 URL 사용)</label>
@@ -62,8 +65,8 @@
     <!-- 신분증 영역 (가로 고정형) -->
     <div class="id-card-container">
         <div class="id-card" id="idCardElement"> 
-            <!-- 비디오 엘리먼트 -->
-            <video autoplay muted loop id="bg-video">
+            <!-- [수정] playsinline 속성 추가 -->
+            <video autoplay muted loop playsinline id="bg-video">
                 <source src="background_video.mp4" type="video/mp4">
             </video>
             <div class="content">

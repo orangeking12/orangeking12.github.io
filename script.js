@@ -24,11 +24,9 @@ function loadUserInfo() {
     if (savedInfo) { 
         userInfo = JSON.parse(savedInfo); 
     } else {
-        // 처음 방문이거나 데이터가 없다면 기본 정보를 로컬 스토리지에 저장 (초기화)
         localStorage.setItem('idCardUserInfo', JSON.stringify(userInfo));
     }
     
-    // 정보 로드 후 UI 업데이트 및 모드 적용 함수 호출
     updateCardUI(); 
     loadInputFields();
     document.getElementById('modeSwitch').checked = userInfo.isBandMode;
@@ -38,20 +36,21 @@ function loadUserInfo() {
 function updateCardUI() {
     document.getElementById('user-name').textContent = userInfo.name;
     document.getElementById('user-nickname').textContent = userInfo.nickname;
-    document.getElementById('user-nickname').style.fontWeight = 'bold';
-
-    // ⭐ 수정됨: 엔터(\n)를 <br> 태그로 변환하여 innerHTML로 삽입 ⭐
+    
+    // 주소 엔터 처리: \n를 <br> 태그로 변환하여 innerHTML로 삽입
     const addressHtml = userInfo.address.replace(/\n/g, '<br>');
     document.getElementById('user-address').innerHTML = addressHtml;
     
+    // 별명 텍스트의 폰트 굵기를 굵게 설정
+    document.getElementById('user-nickname').style.fontWeight = 'bold';
+
     const userPhotoElement = document.getElementById('user-photo');
-    // 기본 이미지를 포함하여 항상 유효한 URL로 설정
-    userPhotoElement.src = userInfo.photoUrl || "placeholder_photo.jpg"; 
-    
+    userPhotoElement.src = userInfo.photoUrl || "placeholder_photo.jpg";
+
     // 이미지 로드 실패 핸들러
     userPhotoElement.onerror = () => {
         console.error("프로필 사진 로드 실패. 기본 이미지로 대체합니다.");
-        userPhotoElement.src = "placeholder_photo.jpg"; // 기본 이미지로 대체
+        userPhotoElement.src = "placeholder_photo.jpg"; 
     };
 }
 
@@ -59,7 +58,7 @@ function updateCardUI() {
 function loadInputFields() {
     document.getElementById('userNameInput').value = userInfo.name;
     document.getElementById('userNicknameInput').value = userInfo.nickname;
-    // ⭐ 수정됨: textarea에 원본 텍스트(엔터 포함) 로드 ⭐
+    // textarea에 원본 텍스트(엔터 포함) 로드
     document.getElementById('userAddressInput').value = userInfo.address;
     
     document.getElementById('userPhotoUrlInput').value = ''; 
@@ -72,10 +71,9 @@ function saveUserInfo() {
     
     userInfo.name = document.getElementById('userNameInput').value;
     userInfo.nickname = document.getElementById('userNicknameInput').value;
-    // ⭐ 수정됨: textarea에서 값 가져옴 ⭐
+    // textarea에서 값 가져옴
     userInfo.address = document.getElementById('userAddressInput').value;
 
-    // 사진 처리 로직: 파일이 선택되었는지, URL이 입력되었는지 확인
     if (fileInput.files && fileInput.files.length > 0) {
         const reader = new FileReader();
         reader.onload = function(e) {
@@ -87,8 +85,7 @@ function saveUserInfo() {
             alert("사진 파일을 읽는 중 오류가 발생했습니다. URL 입력란을 확인해주세요.");
             finalizeSave(); 
         };
-        // ⭐ 오류 수정: fileInput.files[0] 형태로 첫 번째 파일(Blob)을 명시적으로 전달 ⭐
-        reader.readAsDataURL(fileInput.files[0]); 
+        reader.readAsDataURL(fileInput.files);
     } else if (urlInput.value.trim() !== '') {
         userInfo.photoUrl = urlInput.value.trim();
         finalizeSave();
@@ -141,3 +138,14 @@ function applyModeStyles() {
 
 // 페이지 로드 시 초기 함수 실행
 loadUserInfo();
+
+// ⭐ 신분증 클릭 시 정보 표시/숨김 및 배경 오버레이 토글 ⭐
+document.getElementById('idCardElement').addEventListener('click', function() {
+    const contentElement = document.querySelector('.content'); 
+    const idCardContainer = document.querySelector('.id-card-container');
+    const bodyElement = document.body;
+
+    contentElement.classList.toggle('revealed'); 
+    idCardContainer.classList.toggle('revealed');
+    bodyElement.classList.toggle('overlay-active');
+});
